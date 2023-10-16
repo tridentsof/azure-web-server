@@ -92,3 +92,15 @@ variable "vm_network_profile" {
   description = "(Required) virtual machine network profile name"
   default = "vmNetWorkProfile"
 }
+
+variable "vm_sku" {
+  type = string
+  description = "(Required) Size of the VM"
+  default = "Standard_B1ls"
+}
+
+variable "vm_tier" {
+  type = string
+  description = "(Required) Tier of the VM"
+  default = "Standard"
+}

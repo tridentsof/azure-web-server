@@ -113,36 +113,18 @@ resource "azurerm_lb_nat_pool" "lbnatpool" {
   frontend_ip_configuration_name = "PublicIPAddress"
 }
 
-resource "azurerm_lb_probe" "this" {
-  loadbalancer_id = azurerm_lb.this.id
-  name            = "http-probe"
-  protocol        = "Http"
-  request_path    = "/health"
-  port            = 8080
-}
-
 resource "azurerm_virtual_machine_scale_set" "this" {
   name                = var.vmss_name
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
 
   # automatic rolling upgrade
-  automatic_os_upgrade = true
-  upgrade_policy_mode  = "Rolling"
-
-  rolling_upgrade_policy {
-    max_batch_instance_percent              = 20
-    max_unhealthy_instance_percent          = 20
-    max_unhealthy_upgraded_instance_percent = 5
-    pause_time_between_batches              = "PT0S"
-  }
-
-  # required when using rolling upgrade policy
-  health_probe_id = azurerm_lb_probe.this.id
+  automatic_os_upgrade = false
+  upgrade_policy_mode  = "Manual"
 
   sku {
-    name     = "Basic_Bls1"
-    tier     = "Basic"
+    name     = var.vm_sku
+    tier     = var.vm_tier
     capacity = length(var.vm_linux_names)
   }
 
@@ -151,7 +133,6 @@ resource "azurerm_virtual_machine_scale_set" "this" {
   }
 
   storage_profile_os_disk {
-    name              = var.vm_os_disk_name
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
