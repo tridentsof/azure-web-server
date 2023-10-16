@@ -12,31 +12,37 @@ variable "resource_group_name" {
 variable "location" {
   type = string
   description = "(Required) The Azure Region where the Resource Group should exist. Changing this forces a new Resource Group to be created."
+  default = "eastus"
 }
 
 variable "nsg_name" {
   type = string
   description = "(Required) Specifies the name of the network security group. Changing this forces a new resource to be created."
+  default = "nsg-udacity"
 }
 
 variable "vnet_name" {
   type = string
   description = " (Required) The name of the virtual network. Changing this forces a new resource to be created."
+  default = "vnet-udacity"
 }
 
 variable "snet_name" {
   type = string
   description = "(Required) The name of the subnet"
+  default = "snet-udacity"
 }
 
 variable "ni_name" {
   type = string
   description = "(Required) The name of the Network Interface. Changing this forces a new resource to be created."
+  default = "ni-udacity"
 }
 
 variable "public_ip_name" {
   type = string
   description = "(Required) Specifies the name of the Public IP. Changing this forces a new Public IP to be created."
+  default = "pi-udacity"
 }
 
 variable "vm_linux_names" {
