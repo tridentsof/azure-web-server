@@ -1,0 +1,28 @@
+{
+	"builders": [{
+		"type": "azure-arm",
+
+		"client_id": "b0de77a3-a6d0-4923-a563-20a83b402b44",
+		"client_secret": "xB08Q~qeNzNGFKgOnrvhledpozcQ7nVFlS.dJcEk",
+		"subscription_id": "d381139d-0fa2-4a19-a4a0-0df928a317be",
+
+		"os_type": "Linux",
+		"image_publisher": "Canonical",
+		"image_offer": "UbuntuServer",
+		"image_sku": "18.04-LTS",
+
+		"managed_image_resource_group_name": "udacity-project-1",
+		"managed_image_name": "projectUdacity",
+
+		"location": "East US",
+		"vm_size": "Standard_B1ls"
+	}],
+	"provisioners": [{
+		"inline": [
+			"echo 'Hello, World!' > index.html",
+			"nohup busybox httpd -f -p 80 &"
+		],
+		"inline_shebang": "/bin/sh -x",
+		"type": "shell"
+	}]
+}
