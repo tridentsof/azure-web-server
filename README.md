@@ -39,9 +39,9 @@ Once you've installed the dependencies, there are 3 main parts you should notice
   3. Run the command to show the plan created by Terraform:
   `terraform plan -var-file testing.tfvars -out solution.plan`
   4. Run the command to apply the creation to the Azure Portal:
-  `terrafrorm apply -var-file testing.tfvars`
+  `terrafrorm apply solution.plan`
   5. If you want to destroy your resources created use this command:
-  `terraform destroy -var-file testing.tfvars`
+  `terraform destroy solution.plan`
 
 
 ### Output
