@@ -17,6 +17,18 @@ For this project, you will write a Packer template and a Terraform template to d
 4. Install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Instructions
+Before you start, here is the example for you to change the variables.tf file:
+  1. Open variables.tf file at terraform folder
+  2. Add new variable by using the syntax:
+  variable "{variableName}" {
+    type = {dataType}
+    description = "{description for the variable}"
+    default = "{default value if not have}"
+  }
+  3. Or you can edit the variable type, description, default value,...
+  4. Save the file
+  5. Run terraform plan -> terraform apply
+
 Once you've installed the dependencies, there are 3 main parts you should notice:
 **First: Define and apply Azure Policy:**
   1. Create Resource Group by using template code at file: /policy/create-resource.sh

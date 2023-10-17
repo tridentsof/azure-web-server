@@ -1,3 +1,11 @@
+variable "tags" {
+  type    = map(string)
+  default = {
+    env = "testing"
+    app = "udacity"
+  }
+}
+
 variable "resource_group_name" {
   type = string
   default = "rg-udacityproject"

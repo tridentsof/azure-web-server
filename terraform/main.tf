@@ -15,9 +15,7 @@ resource "azurerm_virtual_network" "this" {
   resource_group_name = azurerm_resource_group.this.name
   address_space       = ["10.0.0.0/16"]
  
-  tags = {
-    env = "QA"
-  }
+  tags = var.tags
 }
 
 resource "azurerm_subnet" "this" {
@@ -79,9 +77,7 @@ resource "azurerm_public_ip" "this" {
   location            = azurerm_resource_group.this.location
   allocation_method   = "Static"
 
-  tags = {
-    env = "QA"
-  }
+  tags = var.tags
 }
 
 
@@ -99,7 +95,8 @@ resource "azurerm_lb" "this" {
 
 resource "azurerm_lb_backend_address_pool" "bpepool" {
   loadbalancer_id = azurerm_lb.this.id
-  name            = "BackEndAddressPool"
+  name            = "bep-${var.vm_linux_names[count.index]}"
+  count           = length(var.vm_linux_names)
 }
 
 resource "azurerm_lb_nat_pool" "lbnatpool" {
@@ -159,12 +156,10 @@ resource "azurerm_virtual_machine_scale_set" "this" {
       name                                   = "TestIPConfiguration"
       primary                                = true
       subnet_id                              = azurerm_subnet.this.id
-      load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepool.id]
+       load_balancer_backend_address_pool_ids = azurerm_lb_backend_address_pool.bpepool[*].id
       load_balancer_inbound_nat_rules_ids    = [azurerm_lb_nat_pool.lbnatpool.id]
     }
   }
 
-  tags = {
-    environment = "QA"
-  }
+  tags = var.tags
 }
